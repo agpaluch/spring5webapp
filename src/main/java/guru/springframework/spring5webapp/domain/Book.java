@@ -1,6 +1,7 @@
 package guru.springframework.spring5webapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,10 +12,13 @@ public class Book {
     private String title;
     private String isbn;
 
+    @ManyToOne
+    private Publisher publisher;
+
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
     inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
 
     public Book() {
     }
@@ -24,36 +28,44 @@ public class Book {
         this.isbn = isbn;
     }
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
-    void setId(final Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    void setTitle(final String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
-    String getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    void setIsbn(final String isbn) {
+    public void setIsbn(final String isbn) {
         this.isbn = isbn;
     }
 
-    Set<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    void setAuthors(final Set<Author> authors) {
+    public void setAuthors(final Set<Author> authors) {
         this.authors = authors;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(final Publisher publisher) {
+        this.publisher = publisher;
     }
 
     @Override
@@ -62,7 +74,6 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
                 '}';
     }
 
